@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="uk"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI-моделі для 3D-пайплайну: тести і висновки</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400..700&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap">
+<style>
+html,body{margin:0;height:100%;background:#0E1116;overflow:hidden}
+#stage{position:absolute;left:50%;top:50%;width:1920px;height:1080px;transform-origin:0 0}
+:root {
+  --ink: #15191F;
+  --paper: #F3F1EB;
+  --panel: #E6E2D8;
+  --panel-dark: #222831;
+  --accent: #E07A2E;
+  --accent-dark: #A9531A;
+  --blue: #3B82C4;
+  --muted: #4A5361;
+  --muted-dark: #B8C2CC;
+}
+body { font-family: 'Inter', Arial, sans-serif; color: var(--ink); }
+section { padding: 128px; box-sizing: border-box; display: flex; flex-direction: column; gap: 40px; }
+section.light { background: var(--paper); color: var(--ink); }
+section.dark { background: var(--ink); color: var(--paper); }
+section.accent { background: var(--accent); color: var(--ink); }
+h1, h2, h3 { font-family: 'Rubik', Arial, sans-serif; }
+h1 { font-size: 104px; font-weight: 700; line-height: 1.05; }
+h2 { font-size: 64px; font-weight: 600; line-height: 1.1; }
+h3 { font-size: 36px; font-weight: 600; line-height: 1.2; }
+p { font-size: 30px; line-height: 1.4; }
+.eyebrow { font-family: 'Rubik', Arial, sans-serif; font-size: 26px; font-weight: 600; letter-spacing: 2px; color: var(--accent-dark); }
+section.dark .eyebrow { color: var(--accent); }
+.lead { font-size: 36px; line-height: 1.35; color: var(--muted); }
+section.dark .lead { color: var(--muted-dark); }
+.small { font-size: 24px; line-height: 1.4; color: var(--muted); }
+section.dark .small { color: var(--muted-dark); }
+.row { display: flex; flex-direction: row; gap: 32px; }
+.col { display: flex; flex-direction: column; gap: 24px; }
+.grow { flex: 1; }
+.card { background: var(--panel); border-radius: 20px; padding: 36px; display: flex; flex-direction: column; gap: 16px; flex: 1; }
+section.dark .card { background: var(--panel-dark); }
+.card .num { font-family: 'Rubik', Arial, sans-serif; font-size: 72px; font-weight: 700; color: var(--accent-dark); line-height: 1; }
+section.dark .card .num { color: var(--accent); }
+.card .body { font-size: 28px; line-height: 1.4; color: var(--muted); }
+section.dark .card .body { color: var(--muted-dark); }
+.step { font-family: 'Rubik', Arial, sans-serif; font-size: 28px; font-weight: 700; color: var(--accent-dark); }
+section.dark .step { color: var(--accent); }
+.chips { display: flex; flex-direction: row; gap: 14px; align-items: center; }
+.chip { font-size: 26px; font-weight: 600; background: var(--panel-dark); color: var(--paper); border-radius: 14px; padding: 14px 22px; }
+.arrow { font-size: 30px; color: var(--accent); }
+.shot { border-radius: 16px; object-fit: contain; background: #20252C; }
+.cap { font-size: 24px; line-height: 1.35; color: var(--muted); }
+section.dark .cap { color: var(--muted-dark); }
+table.data { font-family: 'Inter', Arial, sans-serif; font-size: 27px; color: var(--ink); width: 100%; }
+section.dark table.data { color: var(--paper); }
+.plus { font-size: 28px; line-height: 1.4; }
+.big-statement { font-family: 'Rubik', Arial, sans-serif; font-size: 120px; font-weight: 700; line-height: 1.02; }
+.verdict { font-size: 26px; line-height: 1.35; }
+.list { font-size: 30px; line-height: 1.45; display: flex; flex-direction: column; gap: 14px; }
+
+#stage p,#stage h1,#stage h2,#stage h3{margin:0}
+#stage table.data{border-collapse:collapse}
+#stage table.data th,#stage table.data td{padding:.35em .6em;text-align:left;border-bottom:1px solid rgba(128,128,128,.35)}
+#stage table.data th{font-weight:600}
+#stage > section{position:absolute;inset:0;width:1920px;height:1080px;display:none !important}
+#stage > section.on{display:flex !important}
+#bar{position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:space-between;align-items:center;padding:8px 16px;font:14px/1.2 Inter,Arial,sans-serif;color:#B8C2CC;background:rgba(14,17,22,.6)}
+#bar button{background:#222831;color:#F3F1EB;border:0;border-radius:6px;padding:8px 14px;font:inherit;cursor:pointer}
+#bar button:hover{background:#2E3540}
+@media print{#bar{display:none}html,body{overflow:visible;height:auto}#stage{position:static;transform:none!important}#stage > section{position:relative;display:flex!important;page-break-after:always}}
+</style></head><body>
+<div id="stage">
+<section id="cover" class="dark" style="justify-content:center">
+<p class="eyebrow">RSG · 3D-ПАЙПЛАЙН · 17.11.2026</p>
+<h1>AI-моделі в нашому 3D-пайплайні</h1>
+<p class="lead">Тести через Unity MCP і Blender MCP: 7 моделей, однакові задачі, незалежна перевірка. Плюс окремі спостереження про Kimi 3D Make і DeepSeek.</p>
+<p class="small">Claude (Opus, Sonnet, Haiku) · GPT-6 Astra · Gemini 4 Argon · Kimi K3.1 · DeepSeek</p>
+
+</section>
+
+<section id="method" class="light">
+<p class="eyebrow">МЕТОД</p>
+<h2>Як ми тестували</h2>
+<div class="row">
+<div class="card"><p class="step">1 · Seed</p><h3>Пак із прихованими дефектами</h3><p class="body">Скрипт створює пак ассетів або порожню сцену. Що зламано, модель не знає.</p></div>
+<div class="card"><p class="step">2 · Модель</p><h3>Працює сама через MCP</h3><p class="body">Аудит, виправлення, перевірка і прибирання за собою. Той самий промпт для всіх.</p></div>
+<div class="card"><p class="step">3 · Grader</p><h3>Оцінка скриптом</h3><p class="body">Кожен пункт перевіряється кодом, а не словами моделі. Штрафи за чужі зміни.</p></div>
+<div class="card"><p class="step">4 · Перевірка</p><h3>Незалежно від звіту</h3><p class="body">Рендер, історія викликів у редакторі, чистота проєкту, токени з рантайму.</p></div>
+</div>
+<p class="lead">Міряємо: бал, час, токени, помилки, і чи чесно модель оцінює себе (впевненість до оцінки).</p>
+
+</section>
+
+<section id="tasks" class="light">
+<p class="eyebrow">ЗАДАЧІ</p>
+<h2>Три тести з нашої реальної роботи</h2>
+<div class="row">
+<div class="card"><p class="step">Unity · v1 · 10 балів</p><h3>Пак з одним префабом</h3><p class="body">6 дефектів з правил Asset Store: корінь префаба без зсуву моделі, колайдер, sRGB і тип нормал-мапи, remap матеріалу FBX, зайвий файл.</p></div>
+<div class="card"><p class="step">Unity · v2 · 20 балів</p><h3>Пак з демо-сценою</h3><p class="body">2 префаби і 5 розставлених скель, які мають лишитись на місці після виправлення. Лампа в префабі, текстура поза паком, сміття з версіями і пастка, документація.</p></div>
+<div class="card"><p class="step">Blender · 20 балів</p><h3>Параметричний стелаж</h3><p class="body">Модель за ТЗ з точністю 2 мм: чиста сітка, нормалі, UV без перекриттів, матеріал. Генератор, який grader викликає з іншими розмірами, і FBX для Unity.</p></div>
+</div>
+
+</section>
+
+<section id="scene" class="dark">
+<p class="eyebrow">UNITY · v2</p>
+<h2>Що бачить перевіряльник</h2>
+<div class="row">
+<div class="col grow"><img class="shot" src="assets/unity_v2_before.png" alt="Демо-сцена до виправлення: білі скелі без текстур" style="width:816px;height:510px"><p class="cap">До: вбудований білий матеріал, у префабі лампа, текстура лежить поза паком.</p></div>
+<div class="col grow"><img class="shot" src="assets/unity_v2_after.png" alt="Демо-сцена після виправлення: текстуровані скелі на своїх місцях" style="width:816px;height:510px"><p class="cap">Після: так виглядав результат у всіх 7 моделей. Скелі стоять точно на своїх місцях.</p></div>
+</div>
+
+</section>
+
+<section id="quality" class="accent" style="justify-content:center">
+<p class="eyebrow" style="color:#15191F">ГОЛОВНИЙ РЕЗУЛЬТАТ</p>
+<p class="big-statement">Якість однакова: 100% у всіх</p>
+<p class="lead" style="color:#15191F">Unity v1 — 10/10, Unity v2 — 20/20, Blender — 20/20 у кожної моделі, що дійшла до кінця. Ніхто не попався на пастки і не зачепив сцену користувача. Моделі відрізняються ціною, швидкістю і надійністю.</p>
+
+</section>
+
+<section id="unity" class="light" style="gap:28px">
+<p class="eyebrow">UNITY MCP</p>
+<h2>Швидкість і ціна при однаковому балі</h2>
+<table class="data">
+<tr><th style="width:24%">Модель</th><th style="width:19%">v1: час · токени</th><th style="width:15%">v2: бал</th><th style="width:16%">v2: час у Unity</th><th style="width:14%">v2: токени</th><th style="width:12%">v2: помилки</th></tr>
+<tr><td>Claude Sonnet 5.5</td><td>1:37 · 104k</td><td>20/20</td><td>2:46</td><td>136k</td><td>1</td></tr>
+<tr><td>Claude Haiku 5.5</td><td>2:04 · 118k</td><td>20/20</td><td>2:51</td><td>164k</td><td>1</td></tr>
+<tr><td>DeepSeek</td><td>2:38 · —</td><td>20/20</td><td>3:30*</td><td>~9.4M**</td><td>17</td></tr>
+<tr><td>Claude Opus 5.5</td><td>2:19 · 103k</td><td>20/20</td><td>4:49</td><td>141k</td><td>0</td></tr>
+<tr><td>GPT-6 Astra</td><td>6:32 · 803k</td><td>20/20</td><td>5:46</td><td>1.64M</td><td>0</td></tr>
+<tr><td>Gemini 4 Argon</td><td>11:40 · 1.66M</td><td>20/20</td><td>7:25</td><td>1.26M</td><td>1</td></tr>
+<tr><td>Kimi K3.1</td><td>14:39 · 1.07M</td><td>20/20</td><td>24:02</td><td>1.47M</td><td>0</td></tr>
+</table>
+<p class="small">* без ~7 хв паузи. ** лише загальний лічильник сесії DSH, верхня межа. Час у Unity — від першого до останнього виклику Unity, однаково для всіх. Токени — з рантайму, а не зі слів моделі; переважно кешований контекст.</p>
+
+</section>
+
+<section id="tokens" class="dark">
+<p class="eyebrow">ТОКЕНИ</p>
+<h2>Ціна однакового результату різна в рази</h2>
+<div class="row">
+<div class="card"><p class="num">~140k</p><h3>Claude</h3><p class="body">Sonnet, Haiku, Opus на складній Unity-задачі. У Blender Sonnet витратив 96k.</p></div>
+<div class="card"><p class="num">1.3–1.6M</p><h3>Astra, Argon, Kimi</h3><p class="body">У 8–12 разів більше на тій самій задачі, переважно кешований контекст і довгі перевірки API.</p></div>
+<div class="card"><p class="num">4–86×</p><h3>Самооцінка занижена</h3><p class="body">Власні оцінки токенів у моделей занижені: Argon назвав 14.6k при реальних 1.26M. Рахувати треба тільки з рантайму.</p></div>
+</div>
+<p class="lead">Для нас обмеження — тижневі ліміти Claude і Codex, тому ощадливі моделі дають більше роботи за тиждень.</p>
+
+</section>
+
+<section id="blender" class="light" style="gap:28px">
+<p class="eyebrow">BLENDER MCP</p>
+<h2>Параметричний стелаж за ТЗ</h2>
+<div class="row" style="gap:40px">
+<div class="col" style="width:1060px">
+<table class="data">
+<tr><th style="width:34%">Модель</th><th style="width:14%">Бал</th><th style="width:22%">Час у Blender</th><th style="width:16%">Токени</th><th style="width:14%">Помилки</th></tr>
+<tr><td>Claude Haiku 5.5</td><td>20/20</td><td>1:05</td><td>105k</td><td>0</td></tr>
+<tr><td>Claude Sonnet 5.5</td><td>20/20</td><td>1:18</td><td>96k</td><td>0</td></tr>
+<tr><td>Claude Opus 5.5</td><td>20/20</td><td>2:47</td><td>111k</td><td>0</td></tr>
+<tr><td>Gemini 4 Argon</td><td>20/20</td><td>6:24</td><td>265k</td><td>0</td></tr>
+<tr><td>GPT-6 Astra</td><td>20/20</td><td>13:26*</td><td>1.63M</td><td>4</td></tr>
+<tr><td>Kimi K3.1</td><td>20/20</td><td>~14:49*</td><td>1.01M</td><td>—</td></tr>
+<tr><td>DeepSeek</td><td>додаємо</td><td>—</td><td>—</td><td>—</td></tr>
+</table>
+<p class="small">* Kimi і Астра працювали в Blender одночасно, тому їхній час завищений. Час — від першого до останнього виклику Blender. Найкращу UV зробив Opus: усі грані в реальному масштабі, однакова щільність текселів.</p>
+</div>
+<div class="col" style="width:564px">
+<img class="shot" src="assets/blender_sonnet.png" alt="Стелаж Sonnet, сірий матеріал" style="width:564px;height:260px">
+<img class="shot" src="assets/blender_astra.png" alt="Стелаж Astra, дерев’яний матеріал" style="width:564px;height:260px">
+<p class="cap">Sonnet і Астра: однакова геометрія до міліметра. Астра єдина дала дерев’яний колір.</p>
+</div>
+</div>
+
+</section>
+
+<section id="kimi-profile" class="dark" style="gap:28px">
+<p class="eyebrow">ПРОФІЛЬ · KIMI K3.1</p>
+<h2>Kimi: агент з власним десктопом і 3D</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+<div class="card" style="padding:28px;gap:10px"><h3>Модель</h3><p class="verdict">MoE 2.8T, з них 104B активних, контекст 1M.</p><p class="verdict">Нативно бачить картинки й відео, відкриті ваги (1.56 TB).</p><p class="verdict">API $2 / $10 за 1M токенів.</p></div>
+<div class="card" style="padding:28px;gap:10px"><h3>Kimi Work: десктоп-агент</h3><p class="verdict">Локальні папки з підтвердженням дій, локальні MCP (так ми підключили Unity і Blender).</p><p class="verdict">WebBridge керує вашим Chrome, cron-задачі, Agent Swarm до ~300 субагентів (заява вендора).</p></div>
+<div class="card" style="padding:28px;gap:10px"><h3>Вбудовані модулі</h3><p class="verdict">3D Make: 3D-веб, моделінг, друк; Tripo всередині, ланцюжок до FBX.</p><p class="verdict">Генерація зображень: концепт-аркуші з видом спереду, ззаду і масштабом.</p><p class="verdict">Slides, Excel, Word, PDF, Deep Research, публікація сайтів.</p></div>
+<div class="card" style="padding:28px;gap:10px"><h3>Що ми побачили</h3><p class="verdict">Усі тести 20/20 і акуратно, але найповільніший: 24 хв на складну Unity-задачу.</p><p class="verdict">Plus $19: один місячний пул agent-кредитів, наші тести з’їли 26%; 2 паралельні задачі.</p></div>
+</div>
+
+</section>
+
+<section id="kimi3d-a" class="dark" style="gap:32px">
+<p class="eyebrow">KIMI 3D MAKE</p>
+<h2>Генерація з Tripo всередині і готовий пайплайн</h2>
+<div class="chips">
+<p class="chip">High-poly Tripo</p><p class="arrow">→</p><p class="chip">Voxel Remesh</p><p class="arrow">→</p><p class="chip">Decimate</p><p class="arrow">→</p><p class="chip">Cleanup</p><p class="arrow">→</p><p class="chip">UV</p><p class="arrow">→</p><p class="chip">Bake</p><p class="arrow">→</p><p class="chip">FBX</p>
+</div>
+<div class="row">
+<div class="col grow"><img class="shot" src="assets/kimi3d_1_mesh.webp" alt="Етап 1: чиста ігрова сітка скелі, 15 000 трикутників" style="width:816px;height:463px"><p class="cap">Етап 1: 15 000 трикутників, 0 відкритих ребер, 0 non-manifold.</p></div>
+<div class="col grow"><img class="shot" src="assets/kimi3d_3_pbr.webp" alt="Етап 3: запечені PBR-текстури, мох на скелі" style="width:816px;height:463px"><p class="cap">Етап 3: запечені Base Color, Normal і Roughness 2K, правильна орієнтація Z-up.</p></div>
+</div>
+
+</section>
+
+<section id="kimi3d-b" class="dark" style="gap:28px">
+<p class="eyebrow">KIMI 3D MAKE</p>
+<h2>Що вийшло на нашій скелі</h2>
+<div class="row">
+<img class="shot" src="assets/kimi3d_2_uv.webp" alt="Етап 2: UV-розгортка з 177 островами і запечений base color" style="width:816px;height:420px">
+<img class="shot" src="assets/kimi3d_4_fbx.webp" alt="Етап 4: FBX до експорту і після повторного імпорту" style="width:816px;height:420px">
+</div>
+<div class="row">
+<div class="col grow"><p class="plus"><b>+</b> Tripo вбудований: від генерації до FBX в одному чаті</p><p class="plus"><b>+</b> Чиста сітка, 2K PBR, FBX пройшов реімпорт</p></div>
+<div class="col grow"><p class="plus"><b>−</b> UV порізана на 177 дрібних островів, атлас 59%: текстуру вручну не поправиш</p><p class="plus"><b>−</b> 15k трикутників — це decimate, а не ретопологія</p></div>
+</div>
+
+</section>
+
+<section id="deepseek-profile" class="dark" style="gap:28px">
+<p class="eyebrow">ПРОФІЛЬ · DEEPSEEK V4</p>
+<h2>DeepSeek: дешева модель і відкритий агент DSH</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+<div class="card" style="padding:28px;gap:10px"><h3>Модель</h3><p class="verdict">V4-Pro і V4.1-Flash, контекст 1M, відкриті ваги MIT.</p><p class="verdict">Тільки API без підписки: Flash ≈ $0.15 / $0.60, Pro ≈ $0.66 / $1.98 за 1M (у пікові години ×2).</p><p class="verdict">Режим міркувань між викликами інструментів.</p></div>
+<div class="card" style="padding:28px;gap:10px"><h3>DeepSeek Harness (DSH)</h3><p class="verdict">Відкритий агент-аналог Claude Code з веб-інтерфейсом: файли, shell, пошук, плани, skills.</p><p class="verdict"><b>Агенти:</b> делегує роботу субагентам, фонові дочірні агенти видно в сайдбарі, ролі з наборами інструментів.</p></div>
+<div class="card" style="padding:28px;gap:10px"><h3>Плагіни і MCP</h3><p class="verdict">Усе в DSH — плагін, MCP-клієнт працює через stdio або HTTP (так ми підключили Unity і Blender).</p><p class="verdict">Модель можна перемикати посеред сесії: у нас flash → v4-pro.</p></div>
+<div class="card" style="padding:28px;gap:10px"><h3>Що ми побачили</h3><p class="verdict">Швидкий і найдешевший: $0.75 за 3 тести, у Unity 3:30 на складній задачі.</p><p class="verdict">Але DSH ще developer preview: 16 збоїв MCP, пропущені пункти перевірки, майже немає зору.</p></div>
+</div>
+
+</section>
+
+<section id="deepseek" class="light">
+<p class="eyebrow">DEEPSEEK</p>
+<h2>Дуже дешево і швидко, але під наглядом</h2>
+<div class="row" style="gap:40px">
+<div class="card" style="flex:0 0 520px"><p class="num">$0.75</p><h3>за все</h3><p class="body">2 тести Unity і 1 тест Blender разом. Підписки немає, тільки оплата за токени через API.</p></div>
+<div class="col grow">
+<p class="plus"><b>+</b> У самому Unity швидкий: 3:30 чистого часу на складній задачі, на рівні Sonnet.</p>
+<p class="plus"><b>+</b> Ціна не залежить від тижневих лімітів Claude і Codex.</p>
+<p class="plus"><b>−</b> 16 збоїв «unknown tool» від його оболонки DSH; щоразу повторював виклик.</p>
+<p class="plus"><b>−</b> Під час перевірки пропустив кілька моментів, які знайшов Claude.</p>
+<p class="plus"><b>−</b> Пропонував вбити MCP-сервери інших застосунків, щоб «полагодити» збої.</p>
+<p class="plus"><b>−</b> Зору практично немає: оцінювати картинки і рендери йому не довіриш.</p>
+</div>
+</div>
+
+</section>
+
+<section id="cost" class="dark">
+<p class="eyebrow">ЛІМІТИ І ВАРТІСТЬ</p>
+<h2>Скільки коштують наші тести</h2>
+<div class="row">
+<div class="card"><p class="num">+1%</p><h3>Claude: тижневий ліміт</h3><p class="body">Один прогін Sonnet у Blender ≈ +1% тижня. Три Claude-моделі на складній Unity-задачі разом з оркестрацією ≈ +3–4%. Ще є 5-годинне вікно, яке закінчується швидше.</p></div>
+<div class="card"><p class="num">26%</p><h3>Kimi Plus: місячний пул</h3><p class="body">Усі тести Kimi (Unity v1 і v2, Blender, налаштування) з’їли 26% місячного agent-пулу. Тобто приблизно 10–12 таких тестів на місяць за $19.</p></div>
+<div class="card"><p class="num">$0.75</p><h3>DeepSeek: оплата за токени</h3><p class="body">2 тести Unity і 1 Blender разом. Без підписки і без лімітів, але й без нагляду не можна.</p></div>
+</div>
+<p class="small">Kimi: один спільний пул кредитів на Kimi Work, Kimi Code, Deep Research, Slides і агентів, рахується за токенами і скидається щомісяця; тижневого ліміту немає, у Kimi Code є 5-годинне вікно; на Plus — 2 паралельні agent-задачі. Pro ×2, Max ×5, Ultra ×10 кредитів.</p>
+
+</section>
+
+<section id="where" class="light" style="gap:28px">
+<p class="eyebrow">ВИСНОВКИ</p>
+<h2>Кого на яку роботу ставити</h2>
+<table class="data" style="font-size:26px">
+<tr><th style="width:38%">Задача</th><th style="width:26%">Основна модель</th><th style="width:36%">Альтернатива</th></tr>
+<tr><td>Unity / Unreal: паки через MCP</td><td>Sonnet, Haiku</td><td>Opus для складного</td></tr>
+<tr><td>Масові скрипти й валідатори</td><td>Haiku, Sonnet</td><td>DeepSeek, якщо ліміти вичерпано</td></tr>
+<tr><td>Параметричні пропси в Blender</td><td>Haiku, Sonnet</td><td>Argon</td></tr>
+<tr><td>Hi-poly → чорновий game-ready</td><td>Kimi 3D Make</td><td>наш fal + Blender пайплайн</td></tr>
+<tr><td>Ретопо й UV під текстурування</td><td>Argon, Opus</td><td>не Kimi: UV дрібно порізана</td></tr>
+<tr><td>Оцінка арту, 2D-промпти</td><td>Claude, Argon</td><td>Kimi як друга думка</td></tr>
+<tr><td>Рев’ю і складні рішення</td><td>Opus, Astra</td><td>—</td></tr>
+</table>
+<p class="small">Якість однакова, тож обираємо за швидкістю, ціною і надійністю. Kimi і DeepSeek передають файли на сервери в КНР: для клієнтських проєктів це треба погодити.</p>
+
+</section>
+
+<section id="next" class="dark">
+<p class="eyebrow">ДАЛІ</p>
+<h2>Що зробити наступним</h2>
+<div class="list">
+<p>1. Дописати Blender-результати Opus і DeepSeek, повторити Kimi без паралельних моделей.</p>
+<p>2. Тест Kimi 3D Make проти нашого Tripo + Blender пайплайну на тій самій скелі: якість сітки, UV, час, ціна.</p>
+<p>3. DeepSeek як резервний виконавець: окремий ключ, тільки пісочниця, без права керувати процесами.</p>
+<p>4. Повтор складних тестів 2–3 рази для важливих моделей, бо один прогін — це ще не статистика.</p>
+<p>5. Узгодити з адміном, які проєкти можна віддавати Kimi і DeepSeek.</p>
+</div>
+
+</section>
+
+</div>
+<div id="bar"><button id="prev" aria-label="Попередній слайд">←</button><span id="count"></span><button id="next" aria-label="Наступний слайд">→</button></div>
+<script>
+const S=[...document.querySelectorAll('#stage > section')];let i=0;
+function fit(){const st=document.getElementById('stage');const k=Math.min(innerWidth/1920,(innerHeight-40)/1080);st.style.transform='scale('+k+') translate(-50%,-50%)';st.style.left='50%';st.style.top='calc(50% - 20px)';st.style.transformOrigin='0 0';st.style.transform='translate(-'+(960*k)+'px,-'+(540*k)+'px) scale('+k+')';}
+function show(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach((s,j)=>s.classList.toggle('on',j===i));document.getElementById('count').textContent=(i+1)+' / '+S.length;history.replaceState(null,'','#'+(i+1));}
+addEventListener('resize',fit);
+addEventListener('keydown',e=>{if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();show(i+1)}if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();show(i-1)}if(e.key==='Home')show(0);if(e.key==='End')show(S.length-1);});
+document.getElementById('prev').onclick=()=>show(i-1);document.getElementById('next').onclick=()=>show(i+1);
+document.getElementById('stage').addEventListener('click',e=>{show(e.clientX>innerWidth/2?i+1:i-1)});
+fit();show((parseInt(location.hash.slice(1))||1)-1);
+</script>
+</body></html>
