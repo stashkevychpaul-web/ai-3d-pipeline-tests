@@ -78,6 +78,16 @@ table.data tr.gem td:first-child { color: #1F4FA8; font-weight: 600; }
 h3 .alt { font-size: 0.6em; vertical-align: 0.25em; }
 section.dark .alt { color: var(--muted-dark); background: transparent; border-color: #3A424E; }
 
+.top3 { gap: 20px; }
+.t3 { flex: 1; background: var(--panel); border-radius: 16px; padding: 14px 22px 12px; display: flex; flex-direction: column; gap: 4px; }
+.t3-h { font-family: 'Rubik', Arial, sans-serif; font-size: 22px; font-weight: 600; line-height: 1.2; color: var(--accent-dark); }
+.t3-h span { font-family: 'Inter', Arial, sans-serif; font-size: 17px; font-weight: 500; color: var(--muted); }
+.t3 ol { margin: 0; padding-left: 26px; font-size: 20px; line-height: 1.4; }
+.t3 li { display: list-item; }
+.t3 li span { display: inline-block; }
+.t3-n { min-width: 72%; }
+.t3-v { font-weight: 700; font-variant-numeric: tabular-nums; }
+
 #stage p,#stage h1,#stage h2,#stage h3{margin:0}
 #stage table.data{border-collapse:collapse}
 #stage table.data th,#stage table.data td{padding:.35em .6em;text-align:left;border-bottom:1px solid rgba(128,128,128,.35)}
@@ -232,10 +242,11 @@ section.dark .alt { color: var(--muted-dark); background: transparent; border-co
 
 </section>
 
-<section id="unity" class="light" style="gap:20px">
+<section id="unity" class="light" style="gap:16px;padding:52px 128px 40px">
 <p class="eyebrow">UNITY MCP</p>
 <h2>Швидкість і ціна при однаковому балі</h2>
-<table class="data" style="font-size:21px">
+<div class="row top3"><div class="t3"><p class="t3-h">Найменше помилок <span>за 3 тести</span></p><ol><li><span class="t3-n">Claude Opus 5.5</span><span class="t3-v">0</span></li><li><span class="t3-n">Gemini 4 Neon (AG)</span><span class="t3-v">0</span></li><li><span class="t3-n">Gemini 4 Argon (AG)</span><span class="t3-v">0</span></li></ol></div><div class="t3"><p class="t3-h">Найшвидші <span>сума часу 3 тестів</span></p><ol><li><span class="t3-n">Claude Sonnet 5.5</span><span class="t3-v">5:41</span></li><li><span class="t3-n">Claude Haiku 5.5</span><span class="t3-v">6:00</span></li><li><span class="t3-n">Claude Opus 5.5</span><span class="t3-v">9:55</span></li></ol></div><div class="t3"><p class="t3-h">Найдешевші <span>$ за 3 тести</span></p><ol><li><span class="t3-n">Claude Haiku 5.5</span><span class="t3-v">$0.15</span></li><li><span class="t3-n">Gemini 4 Hydrogen (AG)</span><span class="t3-v">$1.35</span></li><li><span class="t3-n">Gemini 4 Argon (AG)</span><span class="t3-v">$1.46</span></li></ol></div></div>
+<table class="data" style="font-size:19px">
 <tr><th style="width:27%">Модель</th><th style="width:18%">v1: час · $</th><th style="width:13%">v2: бал</th><th style="width:16%">v2: час у Unity</th><th style="width:14%">v2: $ за задачу</th><th style="width:12%">v2: помилки</th></tr>
 <tr><td>Claude Sonnet 5.5</td><td>1:37 · $0.51</td><td>20/20</td><td>2:46</td><td>$0.78</td><td>1</td></tr>
 <tr><td>Claude Haiku 5.5</td><td>2:04 · $0.05</td><td>20/20</td><td>2:51</td><td>$0.07</td><td>1</td></tr>
@@ -252,7 +263,7 @@ section.dark .alt { color: var(--muted-dark); background: transparent; border-co
 <tr><td>GPT-6.1 Sol</td><td>7:32 · $0.36</td><td>20/20</td><td>16:49*</td><td>$0.94</td><td>11</td></tr>
 <tr><td>Kimi K3.1</td><td>14:39 · $0.46</td><td>20/20</td><td>24:02</td><td>$0.60</td><td>0</td></tr>
 </table>
-<p class="small"><span class="gem-key2">Виділено</span> — моделі Gemini. * без ~7 хв паузи. ** середнє з консолі DeepSeek. *** доробив після одного поштовху. AG — через підписку Antigravity, API — через Gemini CLI з ключем. Sol працював паралельно з іншими сесіями в Unity. Час v2 — від першого до останнього виклику Unity, однаково для всіх; v1 — час усього прогону. $ — за прайсом API з токенів рантайму (для Claude на підписці це еквівалент).</p>
+<p class="small">Топ-3 — сума за v1, v2 і Blender; DeepSeek без Blender — поза ним. <span class="gem-key2">Виділено</span> — моделі Gemini. * без ~7 хв паузи. ** середнє з консолі DeepSeek. *** доробив після одного поштовху. AG — через підписку Antigravity, API — через Gemini CLI з ключем. Sol працював паралельно з іншими сесіями в Unity. Час v2 — від першого до останнього виклику Unity, однаково для всіх; v1 — час усього прогону. $ — за прайсом API з токенів рантайму (для Claude на підписці це еквівалент).</p>
 
 </section>
 
