@@ -74,6 +74,10 @@ table.data tr.gem td { background: #E3ECFB; }
 table.data tr.gem td:first-child { color: #1F4FA8; font-weight: 600; }
 .gem-key2 { color: #1F4FA8; font-weight: 700; background: #E3ECFB; padding: 0 6px; border-radius: 4px; }
 
+.alt { display: inline-block; font-family: 'Inter', Arial, sans-serif; font-size: 0.88em; font-weight: 600; line-height: 1.3; color: #2E3540; background: #FFFFFF; border: 2px solid #CBC5B8; border-radius: 8px; padding: 1px 9px; margin-left: 8px; vertical-align: 0.1em; white-space: nowrap; }
+h3 .alt { font-size: 0.6em; vertical-align: 0.25em; }
+section.dark .alt { color: var(--muted-dark); background: transparent; border-color: #3A424E; }
+
 #stage p,#stage h1,#stage h2,#stage h3{margin:0}
 #stage table.data{border-collapse:collapse}
 #stage table.data th,#stage table.data td{padding:.35em .6em;text-align:left;border-bottom:1px solid rgba(128,128,128,.35)}
@@ -210,20 +214,20 @@ table.data tr.gem td:first-child { color: #1F4FA8; font-weight: 600; }
 <p class="eyebrow">GEMINI 4 · ARGON / NEON / HYDROGEN / CARBON · ANTIGRAVITY І API</p>
 <h2>Hydrogen найшвидший і найдешевший, Antigravity дешевший за API</h2>
 <table class="data" style="font-size:20px">
-<tr><th style="width:17%">Модель</th><th style="width:11%">Шлях</th><th style="width:16%">Unity v1: бал · час · помилки</th><th style="width:16%">Unity v2</th><th style="width:15%">Blender</th><th style="width:10%">$ за 3 тести</th><th style="width:15%">Ліміт: тиждень / 5 год</th></tr>
-<tr><td>Gemini 4 Argon</td><td>Antigravity</td><td>10/10 · 6:00 · 0</td><td>20/20 · 7:29 · 0</td><td>20/20 · 4:28 · 0</td><td>$1.46</td><td>~10%**</td></tr>
-<tr><td>Gemini 4 Argon</td><td>API</td><td>10/10 · 11:40 · 3</td><td>20/20 · 7:25 · 1</td><td>20/20 · 6:24 · 0</td><td>$2.77</td><td>—</td></tr>
-<tr><td>Gemini 4 Neon</td><td>Antigravity</td><td>10/10 · 4:12 · 0</td><td>20/20 · 5:30 · 0</td><td>20/20 · 4:29 · 0</td><td>$2.19</td><td>~3% / ~8%</td></tr>
-<tr><td>Gemini 4 Neon</td><td>API</td><td>10/10 · 5:23 · 2</td><td>20/20 · 5:27 · 5</td><td>20/20 · 4:02 · 0</td><td>$4.85</td><td>—</td></tr>
-<tr><td><b>Gemini 4 Hydrogen</b></td><td>Antigravity</td><td>10/10 · 3:17 · 1</td><td>20/20 · 4:59 · 4</td><td><b>20/20 · 2:02 · 0</b></td><td><b>$1.35</b></td><td><b>~1% / ~5%</b></td></tr>
-<tr><td>Gemini 4 Hydrogen</td><td>API</td><td><b>10/10 · 3:13 · 3</b></td><td>20/20* · 5:40 · 12</td><td>20/20 · 2:32 · 0</td><td>$2.74</td><td>—</td></tr>
-<tr><td>Gemini 4 Carbon</td><td>лише API</td><td>10/10 · 12:11 · 6</td><td>20/20 · 16:31 · 2</td><td>20/20 · 10:28 · 0</td><td>$3.83</td><td>—</td></tr>
+<tr><th style="width:24%">Модель</th><th style="width:11%">Шлях</th><th style="width:15%">Unity v1: бал · час · помилки</th><th style="width:14%">Unity v2</th><th style="width:13%">Blender</th><th style="width:10%">$ за 3 тести</th><th style="width:13%">Ліміт: тиждень / 5 год</th></tr>
+<tr><td>Gemini 4 Argon<span class="alt">Opus</span></td><td>Antigravity</td><td>10/10 · 6:00 · 0</td><td>20/20 · 7:29 · 0</td><td>20/20 · 4:28 · 0</td><td>$1.46</td><td>~10%**</td></tr>
+<tr><td>Gemini 4 Argon<span class="alt">Opus</span></td><td>API</td><td>10/10 · 11:40 · 3</td><td>20/20 · 7:25 · 1</td><td>20/20 · 6:24 · 0</td><td>$2.77</td><td>—</td></tr>
+<tr><td>Gemini 4 Neon<span class="alt">Sonnet</span></td><td>Antigravity</td><td>10/10 · 4:12 · 0</td><td>20/20 · 5:30 · 0</td><td>20/20 · 4:29 · 0</td><td>$2.19</td><td>~3% / ~8%</td></tr>
+<tr><td>Gemini 4 Neon<span class="alt">Sonnet</span></td><td>API</td><td>10/10 · 5:23 · 2</td><td>20/20 · 5:27 · 5</td><td>20/20 · 4:02 · 0</td><td>$4.85</td><td>—</td></tr>
+<tr><td><b>Gemini 4 Hydrogen</b><span class="alt">Haiku+</span></td><td>Antigravity</td><td>10/10 · 3:17 · 1</td><td>20/20 · 4:59 · 4</td><td><b>20/20 · 2:02 · 0</b></td><td><b>$1.35</b></td><td><b>~1% / ~5%</b></td></tr>
+<tr><td>Gemini 4 Hydrogen<span class="alt">Haiku+</span></td><td>API</td><td><b>10/10 · 3:13 · 3</b></td><td>20/20* · 5:40 · 12</td><td>20/20 · 2:32 · 0</td><td>$2.74</td><td>—</td></tr>
+<tr><td>Gemini 4 Carbon<span class="alt">Fable</span></td><td>лише API</td><td>10/10 · 12:11 · 6</td><td>20/20 · 16:31 · 2</td><td>20/20 · 10:28 · 0</td><td>$3.83</td><td>—</td></tr>
 </table>
-<p class="small">* Зупинився після аудиту, доробив після одного поштовху. ** Окремий тижневий ліміт Argon (без 5-годинного). Час v1 — весь прогін, v2 і Blender — від першого до останнього виклику редактора. Antigravity — рівень high, API — типовий рівень Gemini CLI. $ — за прайсом API (Argon $2/$10, Neon $3/$15, Hydrogen $1.50/$7.50 за 1M); для Antigravity це еквівалент, реально списується ліміт підписки. Ліміт — найменший залишок з кількох знімків /usage, крок лічильника ~1%.</p>
+<p class="small">Сірий кубик — приблизний аналог серед моделей Claude за рівнем. * Зупинився після аудиту, доробив після одного поштовху. ** Окремий тижневий ліміт Argon (без 5-годинного). Час v1 — весь прогін, v2 і Blender — від першого до останнього виклику редактора. Antigravity — рівень high, API — типовий рівень Gemini CLI. $ — за прайсом API (Argon $2/$10, Neon $3/$15, Hydrogen $1.50/$7.50 за 1M); для Antigravity це еквівалент, реально списується ліміт підписки. Ліміт — найменший залишок з кількох знімків /usage, крок лічильника ~1%.</p>
 <div class="row" style="gap:22px">
-<div class="card" style="padding:20px;gap:6px"><h3>Hydrogen</h3><p class="body">Найшвидший і найдешевший Gemini. Але в Unity більше помилок, а через API раз кинув задачу на півдорозі.</p></div>
-<div class="card" style="padding:20px;gap:6px"><h3>Neon</h3><p class="body">Через Antigravity — жодної помилки. Через API — 7 помилок і найдорожчий серед Gemini: $4.85 за 3 тести.</p></div>
-<div class="card" style="padding:20px;gap:6px"><h3>Argon</h3><p class="body">Найповільніший у Unity, але чистий. Через Antigravity майже вдвічі дешевший, ніж через API.</p></div>
+<div class="card" style="padding:20px;gap:6px"><h3>Hydrogen <span class="alt">Haiku+</span></h3><p class="body">Найшвидший і найдешевший Gemini. Але в Unity більше помилок, а через API раз кинув задачу на півдорозі.</p></div>
+<div class="card" style="padding:20px;gap:6px"><h3>Neon <span class="alt">Sonnet</span></h3><p class="body">Через Antigravity — жодної помилки. Через API — 7 помилок і найдорожчий серед Gemini: $4.85 за 3 тести.</p></div>
+<div class="card" style="padding:20px;gap:6px"><h3>Argon <span class="alt">Opus</span></h3><p class="body">Найповільніший у Unity, але чистий. Через Antigravity майже вдвічі дешевший, ніж через API.</p></div>
 </div>
 
 </section>
